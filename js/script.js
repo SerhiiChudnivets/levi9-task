@@ -36,7 +36,7 @@ function nextPage() {
     curentPage += 1;
     number_page.innerHTML = curentPage;
     'use strict';
-    fetch('http://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+    fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
         .then(function (response) {
             return response.json();
         })
@@ -68,7 +68,7 @@ function previosPage() {
         curentPage -= 1;
         number_page.innerHTML = curentPage;
         'use strict';
-        fetch('http://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+        fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then(function (response) {
                 return response.json();
             })
