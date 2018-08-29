@@ -16,7 +16,11 @@ let getNews = (() => {
                     .then(function (data) {
                         templ(data);
                     })
-                    .catch(alert);
+                    .catch(
+                        function () {
+                            document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                            document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                        });
             }
         })
         .catch(function () {
@@ -38,6 +42,7 @@ let nextPage = () => {
     if (curentPage == all_pages.textContent) {
         document.getElementById('next').setAttribute('disabled', 'true');
     }
+
     else {
         fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then(function (response) {
@@ -52,7 +57,10 @@ let nextPage = () => {
                         .then(function (data) {
                             templ(data);
                         })
-                        .catch(alert);
+                        .catch(function () {
+                            document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                            document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                        });
                 }
             })
             .catch(function () {
@@ -100,7 +108,12 @@ let currPage = (e) => {
                             .then(function (data) {
                                 templ(data);
                             })
-                            .catch(alert);
+                            .catch(
+                                function () {
+                                    document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                                    document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                                }
+                            );
                     }
                 })
                 .catch(function () {
@@ -144,7 +157,12 @@ let previosPage = () => {
                         .then(function (data) {
                             templ(data);
                         })
-                        .catch(alert);
+                        .catch(
+                            function () {
+                                document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                                document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                            }
+                        );
                 }
             })
             .catch(function () {
@@ -165,8 +183,8 @@ let templ = (data) => {
     }
     list +=
         `<div class="card ">
-                <div class="card-header  "id="headingOne_${k}">
-                    <div class="row alert alert-success" data_open="${k}" data-toggle="collapse" data-target="#collapseOne_${k}" aria-expanded="true" aria-controls="collapseOne" onclick="accordion(event.target);">
+                <div class="card-header  alert alert-success"id="headingOne_${k}">
+                    <div class="row " data_open="${k}" data-toggle="collapse" data-target="#collapseOne_${k}" aria-expanded="true" aria-controls="collapseOne" onclick="accordion(event.target);">
                         <div class='col-10' data_open="${k}">
                             <div class="point" data_open="${k}">${data.response.content.webTitle}
                             </div>
