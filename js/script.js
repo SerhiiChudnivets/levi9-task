@@ -38,7 +38,6 @@ let nextPage = () => {
     if (curentPage == all_pages.textContent) {
         document.getElementById('next').setAttribute('disabled', 'true');
     }
-
     else {
         fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then(function (response) {
@@ -66,19 +65,13 @@ let nextPage = () => {
 let currPage = (e) => {
     e = e || window.event;
     if (e.keyCode == 13) {
-
         var number_page = document.getElementById('current-page');
         var curentPage = document.getElementById('current-page').value;
         number_page.setAttribute('value', curentPage);
-
         var all_pages = document.getElementById('all-pages').textContent;
         all_pages = Number(all_pages)
         curentPage = Number(curentPage)
-        if (curentPage < 1 || curentPage > all_pages || !/^[0-9]+$/.test(curentPage)) {
-
-        }
-        else {
-
+        if (curentPage > 1 || curentPage < all_pages || /^[0-9]+$/.test(curentPage)) {
             if (curentPage == 1) {
                 document.getElementById('prev').setAttribute('disabled', 'true');
                 document.getElementById('next').removeAttribute('disabled');
@@ -100,7 +93,6 @@ let currPage = (e) => {
                 })
                 .then(function (data) {
                     for (var i = 0; i < 10; i++) {
-
                         fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                             .then(function (response) {
                                 return response.json();
@@ -164,12 +156,16 @@ let previosPage = () => {
 
 let templ = (data) => {
     var app = document.getElementById('accordionExample');
-    var list = '<div class="card  "> ';
+    var list = '';
     if (k == 10) {
         k = 0;
     }
+    if (data.response.content.blocks.body.length == 0) {
+        data.response.content.blocks.body.push({ bodyTextSummary: '' });
+    }
     list +=
-                `<div class="card-header  "id="headingOne_${k}">
+        `<div class="card ">
+                <div class="card-header  "id="headingOne_${k}">
                     <div class="row alert alert-success" data_open="${k}" data-toggle="collapse" data-target="#collapseOne_${k}" aria-expanded="true" aria-controls="collapseOne" onclick="accordion(event.target);">
                         <div class='col-10' data_open="${k}">
                             <div class="point" data_open="${k}">${data.response.content.webTitle}
@@ -184,8 +180,8 @@ let templ = (data) => {
                     <div class="card-body"> 
                         <p id=cont_${k}>${data.response.content.blocks.body[0].bodyTextSummary}</p> <a href="${data.response.content.webUrl}" target="_blank">Read more</a> 
                     </div>
+                </div>
                 </div>`;
-    list += '</div>';
     app.innerHTML += list;
     k++;
 }
@@ -209,7 +205,7 @@ for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener('click', animateButton, false);
 }
 
-let  accordion = (event) => {
+let accordion = (event) => {
     var data_open = event.getAttribute('data_open');
     var imgs = document.querySelectorAll('.icon');
     for (var i = 0; i < imgs.length; i++) {
