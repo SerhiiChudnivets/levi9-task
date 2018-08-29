@@ -8,7 +8,7 @@ let getNews = (() => {
         })
         .then(function (data) {
             document.getElementById('all-pages').innerHTML = data.response.pages;
-            for (var i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                     .then(function (response) {
                         return response.json();
@@ -30,26 +30,26 @@ let getNews = (() => {
 })();
 
 let nextPage = () => {
-    var all_pages = document.getElementById('all-pages');
+    let all_pages = document.getElementById('all-pages');
     document.getElementById('prev').removeAttribute('disabled');
     document.getElementById('accordionExample').innerHTML = '';
-    var number_page = document.getElementById('current-page');
-    var curentPage = document.getElementById('current-page').value;
-    number_page.setAttribute('value', curentPage);
-    curentPage = Number(curentPage);
-    curentPage += 1;
-    number_page.value = curentPage;
-    if (curentPage == all_pages.textContent) {
+    let number_page = document.getElementById('current-page');
+    let currentPage = document.getElementById('current-page').value;
+    number_page.setAttribute('value', currentPage);
+    currentPage = Number(currentPage);
+    currentPage += 1;
+    number_page.value = currentPage;
+    if (currentPage == all_pages.textContent) {
         document.getElementById('next').setAttribute('disabled', 'true');
     }
 
     else {
-        fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+        fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                for (var i = 0; i < 10; i++) {
+                for (let i = 0; i < 10; i++) {
                     fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                         .then(function (response) {
                             return response.json();
@@ -73,18 +73,18 @@ let nextPage = () => {
 let currPage = (e) => {
     e = e || window.event;
     if (e.keyCode == 13) {
-        var number_page = document.getElementById('current-page');
-        var curentPage = document.getElementById('current-page').value;
-        number_page.setAttribute('value', curentPage);
-        var all_pages = document.getElementById('all-pages').textContent;
+        let number_page = document.getElementById('current-page');
+        let currentPage = document.getElementById('current-page').value;
+        number_page.setAttribute('value', currentPage);
+        let all_pages = document.getElementById('all-pages').textContent;
         all_pages = Number(all_pages)
-        curentPage = Number(curentPage)
-        if (curentPage > 1 || curentPage < all_pages || /^[0-9]+$/.test(curentPage)) {
-            if (curentPage == 1) {
+        currentPage = Number(currentPage)
+        if (currentPage > 1 || currentPage < all_pages || /^[0-9]+$/.test(currentPage)) {
+            if (currentPage == 1) {
                 document.getElementById('prev').setAttribute('disabled', 'true');
                 document.getElementById('next').removeAttribute('disabled');
             }
-            else if (curentPage == all_pages) {
+            else if (currentPage == all_pages) {
                 document.getElementById('next').setAttribute('disabled', 'true');
                 document.getElementById('prev').removeAttribute('disabled');
             }
@@ -92,15 +92,15 @@ let currPage = (e) => {
                 document.getElementById('prev').removeAttribute('disabled');
                 document.getElementById('next').removeAttribute('disabled');
             }
-            curentPage = Number(curentPage);
-            number_page.value = curentPage;
+            currentPage = Number(currentPage);
+            number_page.value = currentPage;
             document.getElementById('accordionExample').innerHTML = '';
-            fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+            fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (data) {
-                    for (var i = 0; i < 10; i++) {
+                    for (let i = 0; i < 10; i++) {
                         fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                             .then(function (response) {
                                 return response.json();
@@ -127,29 +127,29 @@ let currPage = (e) => {
 }
 
 let previosPage = () => {
-    var number_page = document.getElementById('current-page');
-    var curentPage = document.getElementById('current-page').value;
-    var all_pages = document.getElementById('all-pages');
-    if (curentPage == 1) {
+    let number_page = document.getElementById('current-page');
+    let currentPage = document.getElementById('current-page').value;
+    let all_pages = document.getElementById('all-pages');
+    if (currentPage == 1) {
     }
     else {
-        if (curentPage == all_pages.textContent) {
+        if (currentPage == all_pages.textContent) {
             document.getElementById('next').removeAttribute('disabled');
         }
-        if (curentPage == 2) {
+        if (currentPage == 2) {
             document.getElementById('prev').setAttribute('disabled', 'true');
-            number_page.value = curentPage;
+            number_page.value = currentPage;
         }
-        curentPage = Number(curentPage);
-        curentPage -= 1;
-        number_page.value = curentPage;
+        currentPage = Number(currentPage);
+        currentPage -= 1;
+        number_page.value = currentPage;
         document.getElementById('accordionExample').innerHTML = '';
-        fetch('https://content.guardianapis.com/search?page=' + curentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+        fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                for (var i = 0; i < 10; i++) {
+                for (let i = 0; i < 10; i++) {
                     fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                         .then(function (response) {
                             return response.json();
@@ -173,8 +173,8 @@ let previosPage = () => {
 }
 
 let templ = (data) => {
-    var app = document.getElementById('accordionExample');
-    var list = '';
+    let app = document.getElementById('accordionExample');
+    let list = '';
     if (k == 10) {
         k = 0;
     }
@@ -183,7 +183,7 @@ let templ = (data) => {
     }
     list +=
         `<div class="card ">
-                <div class="card-header  alert alert-success"id="headingOne_${k}">
+                <div class="card-header  alert alert-light"id="headingOne_${k}">
                     <div class="row " data_open="${k}" data-toggle="collapse" data-target="#collapseOne_${k}" aria-expanded="true" aria-controls="collapseOne" onclick="accordion(event.target);">
                         <div class='col-10' data_open="${k}">
                             <div class="point" data_open="${k}">${data.response.content.webTitle}
@@ -204,8 +204,8 @@ let templ = (data) => {
     k++;
 }
 
-var animateButton = function (e) {
-    var reload = document.getElementById('reload');
+let animateButton = function (e) {
+    let reload = document.getElementById('reload');
     reload.textContent = '';
     e.preventDefault;
     //reset animation
@@ -218,15 +218,15 @@ var animateButton = function (e) {
     }, 3000);
 };
 
-var classname = document.getElementsByClassName("button");
-for (var i = 0; i < classname.length; i++) {
+let classname = document.getElementsByClassName("button");
+for (let i = 0; i < classname.length; i++) {
     classname[i].addEventListener('click', animateButton, false);
 }
 
 let accordion = (event) => {
-    var data_open = event.getAttribute('data_open');
-    var imgs = document.querySelectorAll('.icon');
-    for (var i = 0; i < imgs.length; i++) {
+    let data_open = event.getAttribute('data_open');
+    let imgs = document.querySelectorAll('.icon');
+    for (let i = 0; i < imgs.length; i++) {
         if (imgs[i].attributes.data_open.value == data_open) {
             imgs[i].classList.toggle('rotates');
         }
