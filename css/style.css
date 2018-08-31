@@ -27,7 +27,7 @@ small {
 }
 .button {
   display: inline-block;
-  min-width: 150px;
+  min-width: 50px;
   margin: 20px auto;
   background: #8bc34a;
   color: #fefefe;
@@ -41,6 +41,7 @@ small {
   -webkit-appearance: none;
   border: 0;
   transition: border-radius linear 0.05s, width linear 0.05s;
+  width: 60px;
 }
 .button:focus {
   outline: 0;
