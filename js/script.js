@@ -1,6 +1,7 @@
 'use strict';
 var k = 0;
 let getNews = (() => {
+    
     document.getElementById('prev').setAttribute('disabled', 'true');
     fetch('https://content.guardianapis.com/search?api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
         .then( (response)=> {
@@ -9,18 +10,7 @@ let getNews = (() => {
         .then( (data) =>{
             document.getElementById('all-pages').innerHTML = data.response.pages;
             for (let i = 0; i < 10; i++) {
-                fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                    .then((response)=> {
-                        return response.json();
-                    })
-                    .then( (data) =>{
-                        templ(data);
-                    })
-                    .catch(
-                         ()=> {
-                            document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                            document.getElementById('accordionExample').setAttribute("class", "text-danger");
-                        });
+                content_api(data.response.results[i].apiUrl);
             }
         })
         .catch( () =>{
@@ -50,17 +40,7 @@ let nextPage = () => {
             })
             .then( (data)=> {
                 for (let i = 0; i < 10; i++) {
-                    fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                        .then( (response) => {
-                            return response.json();
-                        })
-                        .then( (data)=> {
-                            templ(data);
-                        })
-                        .catch( ()=> {
-                            document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                            document.getElementById('accordionExample').setAttribute("class", "text-danger");
-                        });
+                    content_api(data.response.results[i].apiUrl);
                 }
             })
             .catch(()=> {
@@ -101,19 +81,8 @@ let currPage = (e) => {
                 })
                 .then( (data)=> {
                     for (let i = 0; i < 10; i++) {
-                        fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                            .then(function (response) {
-                                return response.json();
-                            })
-                            .then(function (data) {
-                                templ(data);
-                            })
-                            .catch(
-                                function () {
-                                    document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                                    document.getElementById('accordionExample').setAttribute("class", "text-danger");
-                                }
-                            );
+                        content_api(data.response.results[i].apiUrl);
+                       
                     }
                 })
                 .catch( ()=> {
@@ -150,19 +119,7 @@ let previosPage = () => {
             })
             .then( (data)=> {
                 for (let i = 0; i < 10; i++) {
-                    fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                        .then( (response)=> {
-                            return response.json();
-                        })
-                        .then( (data)=> {
-                            templ(data);
-                        })
-                        .catch(
-                             ()=> {
-                                document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                                document.getElementById('accordionExample').setAttribute("class", "text-danger");
-                            }
-                        );
+                    content_api(data.response.results[i].apiUrl);
                 }
             })
             .catch(()=> {
@@ -235,3 +192,18 @@ let accordion = (event) => {
         }
     }
 }
+let content_api = (api)=>{
+        fetch(api + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+                               .then( (response)=> {
+                                   return response.json();
+                               })
+                               .then( (data)=> {
+                                   templ(data);
+                               })
+                               .catch(
+                                    ()=> {
+                                       document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                                       document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                                   }
+                               );
+       }
