@@ -1,19 +1,18 @@
 'use strict';
 var k = 0;
 let getNews = (() => {
-    
     document.getElementById('prev').setAttribute('disabled', 'true');
     fetch('https://content.guardianapis.com/search?api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-        .then( (response)=> {
+        .then((response) => {
             return response.json();
         })
-        .then( (data) =>{
+        .then((data) => {
             document.getElementById('all-pages').innerHTML = data.response.pages;
             for (let i = 0; i < 10; i++) {
                 content_api(data.response.results[i].apiUrl);
             }
         })
-        .catch( () =>{
+        .catch(() => {
             document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
             document.getElementById('accordionExample').setAttribute("class", "text-danger");
         });
@@ -35,15 +34,15 @@ let nextPage = () => {
 
     else {
         fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-            .then( (response) =>{
+            .then((response) => {
                 return response.json();
             })
-            .then( (data)=> {
+            .then((data) => {
                 for (let i = 0; i < 10; i++) {
                     content_api(data.response.results[i].apiUrl);
                 }
             })
-            .catch(()=> {
+            .catch(() => {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                 document.getElementById('accordionExample').setAttribute("class", "text-danger");
             });
@@ -76,16 +75,16 @@ let currPage = (e) => {
             number_page.value = currentPage;
             document.getElementById('accordionExample').innerHTML = '';
             fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                .then( (response)=> {
+                .then((response) => {
                     return response.json();
                 })
-                .then( (data)=> {
+                .then((data) => {
                     for (let i = 0; i < 10; i++) {
                         content_api(data.response.results[i].apiUrl);
-                       
+
                     }
                 })
-                .catch( ()=> {
+                .catch(() => {
                     document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                     document.getElementById('accordionExample').setAttribute("class", "text-danger");
                 });
@@ -114,15 +113,15 @@ let previosPage = () => {
         number_page.value = currentPage;
         document.getElementById('accordionExample').innerHTML = '';
         fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-            .then( (response)=> {
+            .then((response) => {
                 return response.json();
             })
-            .then( (data)=> {
+            .then((data) => {
                 for (let i = 0; i < 10; i++) {
                     content_api(data.response.results[i].apiUrl);
                 }
             })
-            .catch(()=> {
+            .catch(() => {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                 document.getElementById('accordionExample').setAttribute("class", "text-danger");
             });
@@ -153,7 +152,7 @@ let templ = (data) => {
                 </div>
                 <div id="collapseOne_${k}" class="collapse " aria-labelledby="headingOne_${k}" data_open="${k}" data-parent="#accordionExample">
                     <div class="card-body"> 
-                        <p id=cont_${k}>${data.response.content.blocks.body[0].bodyTextSummary}</p> <a href="${data.response.content.webUrl}" target="_blank">Read more</a> 
+                        <p id=cont_${k}>${data.response.content.blocks.body[0].bodyTextSummary}</p> <a class="button-link mb-2" href="${data.response.content.webUrl}" target="_blank">Read more</a> 
                     </div>
                 </div>
                 </div>`;
@@ -161,7 +160,7 @@ let templ = (data) => {
     k++;
 }
 
-let animateButton =  (e)=> {
+let animateButton = (e) => {
     let reload = document.getElementById('reload');
     reload.textContent = '';
     e.preventDefault;
@@ -169,7 +168,7 @@ let animateButton =  (e)=> {
     e.target.classList.remove('animate');
     e.target.classList.add('animate');
     e.target.classList.add('animate');
-    setTimeout( ()=> {
+    setTimeout(() => {
         e.target.classList.remove('animate');
         window.location.reload();
     }, 3000);
@@ -192,18 +191,18 @@ let accordion = (event) => {
         }
     }
 }
-let content_api = (api)=>{
-        fetch(api + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                               .then( (response)=> {
-                                   return response.json();
-                               })
-                               .then( (data)=> {
-                                   templ(data);
-                               })
-                               .catch(
-                                    ()=> {
-                                       document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                                       document.getElementById('accordionExample').setAttribute("class", "text-danger");
-                                   }
-                               );
-       }
+let content_api = (api) => {
+    fetch(api + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            templ(data);
+        })
+        .catch(
+            () => {
+                document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                document.getElementById('accordionExample').setAttribute("class", "text-danger");
+            }
+        );
+}
