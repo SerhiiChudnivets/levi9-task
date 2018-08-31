@@ -3,27 +3,27 @@ var k = 0;
 let getNews = (() => {
     document.getElementById('prev').setAttribute('disabled', 'true');
     fetch('https://content.guardianapis.com/search?api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-        .then(function (response) {
+        .then( (response)=> {
             return response.json();
         })
-        .then(function (data) {
+        .then( (data) =>{
             document.getElementById('all-pages').innerHTML = data.response.pages;
             for (let i = 0; i < 10; i++) {
                 fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                    .then(function (response) {
+                    .then((response)=> {
                         return response.json();
                     })
-                    .then(function (data) {
+                    .then( (data) =>{
                         templ(data);
                     })
                     .catch(
-                        function () {
+                         ()=> {
                             document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                             document.getElementById('accordionExample').setAttribute("class", "text-danger");
                         });
             }
         })
-        .catch(function () {
+        .catch( () =>{
             document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
             document.getElementById('accordionExample').setAttribute("class", "text-danger");
         });
@@ -45,25 +45,25 @@ let nextPage = () => {
 
     else {
         fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-            .then(function (response) {
+            .then( (response) =>{
                 return response.json();
             })
-            .then(function (data) {
+            .then( (data)=> {
                 for (let i = 0; i < 10; i++) {
                     fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                        .then(function (response) {
+                        .then( (response) => {
                             return response.json();
                         })
-                        .then(function (data) {
+                        .then( (data)=> {
                             templ(data);
                         })
-                        .catch(function () {
+                        .catch( ()=> {
                             document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                             document.getElementById('accordionExample').setAttribute("class", "text-danger");
                         });
                 }
             })
-            .catch(function () {
+            .catch(()=> {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                 document.getElementById('accordionExample').setAttribute("class", "text-danger");
             });
@@ -96,10 +96,10 @@ let currPage = (e) => {
             number_page.value = currentPage;
             document.getElementById('accordionExample').innerHTML = '';
             fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                .then(function (response) {
+                .then( (response)=> {
                     return response.json();
                 })
-                .then(function (data) {
+                .then( (data)=> {
                     for (let i = 0; i < 10; i++) {
                         fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                             .then(function (response) {
@@ -116,7 +116,7 @@ let currPage = (e) => {
                             );
                     }
                 })
-                .catch(function () {
+                .catch( ()=> {
                     document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                     document.getElementById('accordionExample').setAttribute("class", "text-danger");
                 });
@@ -145,27 +145,27 @@ let previosPage = () => {
         number_page.value = currentPage;
         document.getElementById('accordionExample').innerHTML = '';
         fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-            .then(function (response) {
+            .then( (response)=> {
                 return response.json();
             })
-            .then(function (data) {
+            .then( (data)=> {
                 for (let i = 0; i < 10; i++) {
                     fetch(data.response.results[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-                        .then(function (response) {
+                        .then( (response)=> {
                             return response.json();
                         })
-                        .then(function (data) {
+                        .then( (data)=> {
                             templ(data);
                         })
                         .catch(
-                            function () {
+                             ()=> {
                                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                                 document.getElementById('accordionExample').setAttribute("class", "text-danger");
                             }
                         );
                 }
             })
-            .catch(function () {
+            .catch(()=> {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
                 document.getElementById('accordionExample').setAttribute("class", "text-danger");
             });
@@ -204,7 +204,7 @@ let templ = (data) => {
     k++;
 }
 
-let animateButton = function (e) {
+let animateButton =  (e)=> {
     let reload = document.getElementById('reload');
     reload.textContent = '';
     e.preventDefault;
@@ -212,7 +212,7 @@ let animateButton = function (e) {
     e.target.classList.remove('animate');
     e.target.classList.add('animate');
     e.target.classList.add('animate');
-    setTimeout(function () {
+    setTimeout( ()=> {
         e.target.classList.remove('animate');
         window.location.reload();
     }, 3000);
