@@ -1,6 +1,6 @@
 'use strict';
 let k = 0;
-let getNews = (() => {
+const getNews = (() => {
     document.getElementById('prev').setAttribute('disabled', 'true');
     fetch('https://content.guardianapis.com/search?api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
         .then((response) => {
@@ -18,7 +18,7 @@ let getNews = (() => {
         });
 })();
 
-let nextPage = () => {
+const nextPage = () => {
     let allPages = document.getElementById('all-pages');
     document.getElementById('prev').removeAttribute('disabled');
     document.getElementById('accordionExample').innerHTML = '';
@@ -51,7 +51,7 @@ let nextPage = () => {
     }
 }
 
-let currPage = (e) => {
+const currPage = (e) => {
     e = e || window.event;
     if (e.keyCode == 13) {
         let numberPage = document.getElementById('current-page');
@@ -95,7 +95,7 @@ let currPage = (e) => {
     }
 }
 
-let previosPage = () => {
+const previosPage = () => {
     let numberPage = document.getElementById('current-page');
     let currentPage = document.getElementById('current-page').value;
     let allPages = document.getElementById('all-pages');
@@ -129,7 +129,7 @@ let previosPage = () => {
     }
 }
 
-let templ = (data) => {
+const templ = (data) => {
     let app = document.getElementById('accordionExample');
     let list = '';
     if (k == 10) {
@@ -161,7 +161,7 @@ let templ = (data) => {
     k++;
 }
 
-let animateButton = (e) => {
+const animateButton = (e) => {
     let reload = document.getElementById('reload');
     reload.textContent = '';
     e.preventDefault;
@@ -175,12 +175,12 @@ let animateButton = (e) => {
     }, 3000);
 };
 
-let classname = document.getElementsByClassName("button");
+const classname = document.getElementsByClassName("button");
 for (let i = 0; i < classname.length; i++) {
     classname[i].addEventListener('click', animateButton, false);
 }
 
-let accordion = (event) => {
+const accordion = (event) => {
     let dataOpen = event.getAttribute('data_open');
     let imgs = document.querySelectorAll('.icon');
     for (let i = 0; i < imgs.length; i++) {
@@ -192,7 +192,7 @@ let accordion = (event) => {
         }
     }
 }
-let content_api = (api) => {
+const content_api = (api) => {
     for (let i = 0; i < 10; i++) {
         fetch(api[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then((response) => {
