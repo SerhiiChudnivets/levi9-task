@@ -1,5 +1,6 @@
-Небольшое приложение, в рамках тестового задания  компании Levi9( Киев )
-Даное приложение получает даные из стороннего API и создает список новостей по 10 новостей на каждой странице.
-Навигация приложения осуществляется с помощью кнопок "Next" и "Previos",
- а так же вводом страницы с клавиатуры и нажатия клавиши "Enter".
-Тело приложения состоит из заголовков новостей, а так же при клике на заголовки всплывает первый абзац даной статьи и ссылка на полную статью
+A small application, within the framework of the test task of Levi9 (Kiev)
+This application receives data from a third-party API and creates a news list of 10 news items on each page.
+Navigation application is carried out using the buttons "Next" and "Previos",
+ as well as typing a page from the keyboard and pressing the "Enter" key.
+The application body consists of news headlines, as well as the first paragraph of this article and a link to the full article when clicking on the headers.
+The app is adapted for mobile devices
