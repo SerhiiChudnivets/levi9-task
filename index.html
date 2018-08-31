@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-        <link href="https://fonts.googleapis.com/css?family=Pirata+One" rel="stylesheet">
-        
+    <link href="https://fonts.googleapis.com/css?family=Pirata+One" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">
@@ -20,9 +20,9 @@
                 <h1 class="text-center text-dark mb-0"> The Guardian News</h1>
             </div>
             <div class="col-12  d-flex justify-content-center">
-                
+
                 <button id="reload" class="button success btn btn-success mt-2 mb-3 w-10 p-0">Refresh </button>
-                
+
             </div>
             <div class="col-12">
                 <div id="app">
@@ -30,24 +30,25 @@
                     </div>
                 </div>
             </div>
-         
+
         </div>
         <div class="row my-2 ">
-                <div class="col-md-4 col-sm-12 d-flex justify-content-center">
-                    <button id="prev" class="btn btn-info w-sm-25" onclick="previosPage();">&lt; Previos Page</button>
-                </div>
-                <div class="col-md-4 col-sm-12 d-flex justify-content-center">
-                    <label id="input" class="text-dark text-center my-sm-3 my-3 my-md-0"> 
-                        <input id="current-page" class="w-25" type="text" onkeypress="return currPage(event);" value="1"> of <span id="all-pages"></span> pages
-                    </label>
-                </div>
-                <div class="col-md-4 col-sm-12 d-flex justify-content-center"> 
-                    <button id="next" class="btn btn-info  " onclick="nextPage();">Next Page ></button>
-                </div>
-            
-            
-            
+            <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+                <button id="prev" class="btn btn-info w-sm-25" onclick="previosPage();">&lt; Previos Page</button>
             </div>
+            <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+                <label id="input" class="text-dark text-center my-sm-3 my-3 my-md-0">
+                    <input id="current-page" class="w-25" type="text" onkeypress="return currPage(event);" value="1"> of
+                    <span id="all-pages"></span> pages
+                </label>
+            </div>
+            <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+                <button id="next" class="btn btn-info  " onclick="nextPage();">Next Page ></button>
+            </div>
+
+
+
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

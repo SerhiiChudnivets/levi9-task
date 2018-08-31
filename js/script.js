@@ -1,5 +1,5 @@
 'use strict';
-var k = 0;
+let k = 0;
 let getNews = (() => {
     document.getElementById('prev').setAttribute('disabled', 'true');
     fetch('https://content.guardianapis.com/search?api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
@@ -8,9 +8,9 @@ let getNews = (() => {
         })
         .then((data) => {
             document.getElementById('all-pages').innerHTML = data.response.pages;
-            for (let i = 0; i < 10; i++) {
-                content_api(data.response.results[i].apiUrl);
-            }
+
+            content_api(data.response.results);
+
         })
         .catch(() => {
             document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
@@ -19,16 +19,16 @@ let getNews = (() => {
 })();
 
 let nextPage = () => {
-    let all_pages = document.getElementById('all-pages');
+    let allPages = document.getElementById('all-pages');
     document.getElementById('prev').removeAttribute('disabled');
     document.getElementById('accordionExample').innerHTML = '';
-    let number_page = document.getElementById('current-page');
+    let numberPage = document.getElementById('current-page');
     let currentPage = document.getElementById('current-page').value;
-    number_page.setAttribute('value', currentPage);
+    numberPage.setAttribute('value', currentPage);
     currentPage = Number(currentPage);
     currentPage += 1;
-    number_page.value = currentPage;
-    if (currentPage == all_pages.textContent) {
+    numberPage.value = currentPage;
+    if (currentPage == allPages.textContent) {
         document.getElementById('next').setAttribute('disabled', 'true');
     }
 
@@ -38,9 +38,11 @@ let nextPage = () => {
                 return response.json();
             })
             .then((data) => {
-                for (let i = 0; i < 10; i++) {
-                    content_api(data.response.results[i].apiUrl);
-                }
+
+                document.getElementById('all-pages').innerHTML = data.response.pages;
+
+                content_api(data.response.results);
+
             })
             .catch(() => {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
@@ -52,18 +54,18 @@ let nextPage = () => {
 let currPage = (e) => {
     e = e || window.event;
     if (e.keyCode == 13) {
-        let number_page = document.getElementById('current-page');
+        let numberPage = document.getElementById('current-page');
         let currentPage = document.getElementById('current-page').value;
-        number_page.setAttribute('value', currentPage);
-        let all_pages = document.getElementById('all-pages').textContent;
-        all_pages = Number(all_pages)
+        numberPage.setAttribute('value', currentPage);
+        let allPages = document.getElementById('all-pages').textContent;
+        allPages = Number(allPages)
         currentPage = Number(currentPage)
-        if (currentPage > 1 || currentPage < all_pages || /^[0-9]+$/.test(currentPage)) {
+        if (currentPage > 1 || currentPage < allPages || /^[0-9]+$/.test(currentPage)) {
             if (currentPage == 1) {
                 document.getElementById('prev').setAttribute('disabled', 'true');
                 document.getElementById('next').removeAttribute('disabled');
             }
-            else if (currentPage == all_pages) {
+            else if (currentPage == allPages) {
                 document.getElementById('next').setAttribute('disabled', 'true');
                 document.getElementById('prev').removeAttribute('disabled');
             }
@@ -72,17 +74,16 @@ let currPage = (e) => {
                 document.getElementById('next').removeAttribute('disabled');
             }
             currentPage = Number(currentPage);
-            number_page.value = currentPage;
+            numberPage.value = currentPage;
             document.getElementById('accordionExample').innerHTML = '';
             fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
-                    for (let i = 0; i < 10; i++) {
-                        content_api(data.response.results[i].apiUrl);
+                    document.getElementById('all-pages').innerHTML = data.response.pages;
 
-                    }
+                    content_api(data.response.results);
                 })
                 .catch(() => {
                     document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
@@ -95,31 +96,31 @@ let currPage = (e) => {
 }
 
 let previosPage = () => {
-    let number_page = document.getElementById('current-page');
+    let numberPage = document.getElementById('current-page');
     let currentPage = document.getElementById('current-page').value;
-    let all_pages = document.getElementById('all-pages');
+    let allPages = document.getElementById('all-pages');
     if (currentPage == 1) {
     }
     else {
-        if (currentPage == all_pages.textContent) {
+        if (currentPage == allPages.textContent) {
             document.getElementById('next').removeAttribute('disabled');
         }
         if (currentPage == 2) {
             document.getElementById('prev').setAttribute('disabled', 'true');
-            number_page.value = currentPage;
+            numberPage.value = currentPage;
         }
         currentPage = Number(currentPage);
         currentPage -= 1;
-        number_page.value = currentPage;
+        numberPage.value = currentPage;
         document.getElementById('accordionExample').innerHTML = '';
         fetch('https://content.guardianapis.com/search?page=' + currentPage + '&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                for (let i = 0; i < 10; i++) {
-                    content_api(data.response.results[i].apiUrl);
-                }
+                document.getElementById('all-pages').innerHTML = data.response.pages;
+
+                content_api(data.response.results);
             })
             .catch(() => {
                 document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
@@ -180,10 +181,10 @@ for (let i = 0; i < classname.length; i++) {
 }
 
 let accordion = (event) => {
-    let data_open = event.getAttribute('data_open');
+    let dataOpen = event.getAttribute('data_open');
     let imgs = document.querySelectorAll('.icon');
     for (let i = 0; i < imgs.length; i++) {
-        if (imgs[i].attributes.data_open.value == data_open) {
+        if (imgs[i].attributes.data_open.value == dataOpen) {
             imgs[i].classList.toggle('rotates');
         }
         else {
@@ -192,17 +193,20 @@ let accordion = (event) => {
     }
 }
 let content_api = (api) => {
-    fetch(api + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            templ(data);
-        })
-        .catch(
-            () => {
-                document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
-                document.getElementById('accordionExample').setAttribute("class", "text-danger");
-            }
-        );
+    for (let i = 0; i < 10; i++) {
+        fetch(api[i].apiUrl + '?show-blocks=body&api-key=b0e6d696-338f-4eac-abcd-6e28c0cf4e50')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                templ(data);
+            })
+            .catch(
+                () => {
+                    document.getElementById('accordionExample').innerHTML = "Sorry, we couldn't find news for you. Please try again later";
+                    document.getElementById('accordionExample').setAttribute("class", "text-danger");
+                }
+            );
+
+    }
 }
